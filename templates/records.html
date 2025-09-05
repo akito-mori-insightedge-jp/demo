@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>勤怠記録</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+  </head>
+  <body>
+    <section class="section">
+      <div class="container">
+        <h1 class="title">勤怠記録</h1>
+
+        <form method="get" class="mb-4">
+          <div class="field has-addons">
+            <div class="control is-expanded">
+              <input class="input" type="text" name="employee_name" placeholder="社員名で絞り込み" value="{{ employee_name }}">
+            </div>
+            <div class="control">
+              <button class="button" type="submit">絞り込み</button>
+            </div>
+            <div class="control">
+              <a class="button is-light" href="{{ url_for('records') }}">クリア</a>
+            </div>
+          </div>
+        </form>
+
+        <table class="table is-fullwidth is-striped">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>社員名</th>
+              <th>日付</th>
+              <th>出勤</th>
+              <th>退勤</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for r in items %}
+              <tr>
+                <td>{{ r.id }}</td>
+                <td>{{ r.employee_name }}</td>
+                <td>{{ r.work_date }}</td>
+                <td>{{ r.clock_in_at or '-' }}</td>
+                <td>{{ r.clock_out_at or '-' }}</td>
+              </tr>
+            {% else %}
+              <tr><td colspan="5" class="has-text-centered">データがありません</td></tr>
+            {% endfor %}
+          </tbody>
+        </table>
+
+        <a class="button" href="{{ url_for('index') }}">戻る</a>
+      </div>
+    </section>
+  </body>
+  </html>
+
